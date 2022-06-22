@@ -1,5 +1,7 @@
 import React from 'react';
 import { Box, styled, Typography } from '@mui/material';
+import DrawerAppBar from '../component/Navbar';
+import GetStartedButton from '../component/button';
 const Line = styled('div')(({ theme }) => ({
   position: 'absolute',
   backgroundColor: 'lightblue',
@@ -16,9 +18,10 @@ const Line = styled('div')(({ theme }) => ({
     left: '13%',
   }
 }));
-
 function Dashboard() {
   return (
+      <>
+    <DrawerAppBar/>
     <Box paddingTop={20} textAlign="center" >
       <Typography
         variant="h4"
@@ -37,6 +40,8 @@ function Dashboard() {
         Become smarter about art, history, geography, science, & much more.
       </Typography>
     </Box>
+    <GetStartedButton/>
+    </>
   )
 }
 export default Dashboard

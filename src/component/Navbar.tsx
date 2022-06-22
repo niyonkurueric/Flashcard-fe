@@ -15,7 +15,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import img from '../image/Tesla,_Inc.-Logomark-Black-Logo.wine.svg';
 import Link from '@material-ui/core/Link';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 interface Props {
   window?: () => Window;
 }
@@ -83,10 +82,7 @@ export default function DrawerAppBar(props: Props) {
               <Button  sx={{ color: '#fff' }}>About us</Button>
               <Button  sx={{ color: '#fff' }}>Contact</Button>
               <Button  sx={{ color: '#fff' }}>Signup</Button>
-            <Link href="Login">
-               <Button variant="contained">Explore Destinations</Button>
-               </Link>
-        <Button  sx={{ color: '#fff' }}>Login</Button>
+        <Link href="Login"><Button  sx={{ color: '#fff' }}>Login</Button></Link>
           </Box>
         </Toolbar>
       </AppBar>
