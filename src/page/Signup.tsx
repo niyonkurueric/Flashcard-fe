@@ -1,10 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import Buttons from '../component/Button'
 import Inputs from '../component/Input'
 import DrawerAppBar from '../component/Navbar';
 import { Box,Typography } from '@mui/material';
-export default function Login() {
+export default function Signup() {
   return (
     <>
     <DrawerAppBar/>
@@ -12,7 +11,7 @@ export default function Login() {
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
           alignItems: 'center',
-          margin: '100px 20px',
+          margin: '150px 20px',
           background: 'F8F9FA',
           justifyContent: 'space-evenly',
         }}>
@@ -40,20 +39,24 @@ export default function Login() {
               paddingBottom: '10px',
             }}
           >
-            Login
+            SIGNUP
           </Typography>
-      <Inputs value={'Email'} sx={{
+      <Inputs value={'Fullname'} sx={{
               width:430,
               height: 50,
               marginTop:5
             }} />
-        <Inputs value={'Password'} sx={{
+        <Inputs value={'Email'} sx={{
               width:430,
               height: 50,
                marginTop:30
             }} />
-
-      <Buttons value={'Login'}
+            <Inputs value={'Password'} sx={{
+              width:430,
+              height: 50,
+              marginTop:30
+            }} />
+      <Buttons value={'Signup'}
             sx={{
               width: {
                 xs: 280,
@@ -61,7 +64,7 @@ export default function Login() {
               },
               height: 50,
               margin: {
-                xs: '50px 0px',
+                xs: '100px 0px',
                 sm: '20px 0px',
               },
               backgroundColor: '#00095E',
@@ -72,8 +75,8 @@ export default function Login() {
                 backgroundColor: '#00095E',
               },
             }}/>
-            </Box>
-            </Box>
+          </Box>
+        </Box>
 </>
   )
 }

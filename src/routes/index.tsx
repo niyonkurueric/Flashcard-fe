@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Dashboard from '../page/Dashboard';
 import Login from '../page/Login';
+import Signup from '../page/Signup';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -26,6 +28,7 @@ const AllRoutes = () => (
       <Routes>
        <Route  path="/" element={<Dashboard />} />
         <Route  path="/login" element={<Login />} />
+         <Route  path="/signup" element={<Signup/>} />
       </Routes>
     </BrowserRouter>
   </ThemeProvider>

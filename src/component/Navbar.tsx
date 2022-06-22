@@ -18,7 +18,6 @@ import Link from '@material-ui/core/Link';
 interface Props {
   window?: () => Window;
 }
-
 const Logimage = styled('img')(() => ({
   width: 80,
   height: 80,
@@ -45,10 +44,7 @@ export default function DrawerAppBar(props: Props) {
               <ListItemText>Home</ListItemText>
                <ListItemText>About us</ListItemText>
                 <ListItemText>Contact</ListItemText>
-                 <ListItemText>Login</ListItemText>
-               <Link href="Login">
-               <Button variant="contained">Explore Destinations</Button>
-               </Link>
+                  <Link href="Login"><Button  sx={{ color: '#fff' }}>Login</Button></Link>
             </ListItemButton>
           </ListItem>
       </List>
@@ -81,8 +77,8 @@ export default function DrawerAppBar(props: Props) {
               <Button  sx={{ color: '#fff' }}>Home</Button>
               <Button  sx={{ color: '#fff' }}>About us</Button>
               <Button  sx={{ color: '#fff' }}>Contact</Button>
-              <Button  sx={{ color: '#fff' }}>Signup</Button>
-        <Link href="Login"><Button  sx={{ color: '#fff' }}>Login</Button></Link>
+              <Link href="signup"><Button  sx={{ color: '#fff' }}>Signup</Button></Link>
+              <Link href="Login"><Button  sx={{ color: '#fff' }}>Login</Button></Link>
           </Box>
         </Toolbar>
       </AppBar>

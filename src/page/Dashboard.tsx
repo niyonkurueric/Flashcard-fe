@@ -1,7 +1,6 @@
 import React from 'react';
-import { Box, styled, Typography } from '@mui/material';
+import { Box,Typography,Button, Grid, styled  } from '@mui/material';
 import DrawerAppBar from '../component/Navbar';
-import GetStartedButton from '../component/button';
 const Line = styled('div')(({ theme }) => ({
   position: 'absolute',
   backgroundColor: 'lightblue',
@@ -40,7 +39,11 @@ function Dashboard() {
         Become smarter about art, history, geography, science, & much more.
       </Typography>
     </Box>
-    <GetStartedButton/>
+   <Grid container paddingTop={10} direction="column" alignItems="center">
+      <Grid item>
+          <Button variant="contained">GETTING STARTED</Button>
+      </Grid>
+    </Grid>
     </>
   )
 }
