@@ -3,7 +3,6 @@ import {useNavigate } from "react-router-dom";
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -19,13 +18,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Link from '@material-ui/core/Link'; 
 import Buttons from '../component/Button'
 import Inputs from '../component/Input'
-import DrawerAppBar from '../component/Navbar';
-import Dashboard from './Dashboard';
-
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({

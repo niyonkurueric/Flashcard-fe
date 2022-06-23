@@ -15,7 +15,6 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import img from '../image/Tesla,_Inc.-Logomark-Black-Logo.wine.svg';
 import Link from '@material-ui/core/Link'; 
-import Cards from '../page/Cards';
 interface Props {
   window?: () => Window;
 }

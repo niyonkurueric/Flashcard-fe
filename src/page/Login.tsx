@@ -1,5 +1,4 @@
 import React ,{useState}from 'react'
-import { Link } from 'react-router-dom'
 import Buttons from '../component/Button'
 import Inputs from '../component/Input'
 import DrawerAppBar from '../component/Navbar';
@@ -35,10 +34,7 @@ export default function Login() {
   setEmail(e.target.value)
  }
 
-const [loginUser,{error}] = useMutation(CREATE_LOGIN_MUTATION, {
-    onError: (error) => {
-      console.log(error.message);
-    },
+const [loginUser] = useMutation(CREATE_LOGIN_MUTATION, {
     onCompleted:(loginUser)=>{
       localStorage.setItem("auth", loginUser.login.token);
       navigate("/adminpanel");
@@ -50,7 +46,7 @@ const [loginUser,{error}] = useMutation(CREATE_LOGIN_MUTATION, {
   });
 const onsubmit=async(e:any)=>{
 e.preventDefault()
- const existingToken=await loginUser()
+ loginUser()
 }
   return (
     <>

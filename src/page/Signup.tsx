@@ -4,7 +4,7 @@ import Inputs from '../component/Input'
 import DrawerAppBar from '../component/Navbar';
 import { Box,Typography } from '@mui/material';
 import { useMutation, gql } from '@apollo/client';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CREATE_USER_MUTATION = gql`
   mutation SignupMutation(
@@ -38,10 +38,7 @@ setNames(e.target.value)
  const onhandChangeEmail=(e:any)=>{
   setEmail(e.target.value)
  }
-const [createUser,{error}] = useMutation(CREATE_USER_MUTATION, {
-    onError: (error) => {
-      console.log(error.message);
-    },
+const [createUser] = useMutation(CREATE_USER_MUTATION, {
     onCompleted:(createUser)=>{
       localStorage.setItem("auth", createUser.Signup.token);
       navigate("/adminpanel");
