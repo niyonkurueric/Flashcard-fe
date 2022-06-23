@@ -4,5 +4,8 @@ export interface Buttonprops {
 }
 export interface Inputprops {
   sx: any,
-  value: string
+  label: string
+  onchange: any
+  value: any
+  type: string
 }

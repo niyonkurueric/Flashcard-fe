@@ -1,10 +1,57 @@
-import React from 'react'
+import React ,{useState}from 'react'
 import { Link } from 'react-router-dom'
 import Buttons from '../component/Button'
 import Inputs from '../component/Input'
 import DrawerAppBar from '../component/Navbar';
 import { Box,Typography } from '@mui/material';
+import { useMutation, gql } from '@apollo/client';
+import { useNavigate } from "react-router-dom";
+const CREATE_LOGIN_MUTATION = gql`
+  mutation loginMutation(
+    $password:String!
+    $email:String!
+  )
+  {
+    login(email:$email,password:$password){
+    token
+    user{
+      names
+    }
+  }
+}
+`;
+
+
+
+
 export default function Login() {
+    const navigate = useNavigate();
+ const [email, setEmail] = useState('');
+ const [password, setPassword] = useState('');
+ const handleChangePassword=(e:any)=>{
+  setPassword(e.target.value)
+  }
+ const onhandChangeEmail=(e:any)=>{
+  setEmail(e.target.value)
+ }
+
+const [loginUser,{error}] = useMutation(CREATE_LOGIN_MUTATION, {
+    onError: (error) => {
+      console.log(error.message);
+    },
+    onCompleted:(loginUser)=>{
+      localStorage.setItem("auth", loginUser.login.token);
+      navigate("/adminpanel");
+    },
+    variables: {
+      password: password,
+      email:email
+    }
+  });
+const onsubmit=async(e:any)=>{
+e.preventDefault()
+ const existingToken=await loginUser()
+}
   return (
     <>
     <DrawerAppBar/>
@@ -42,16 +89,26 @@ export default function Login() {
           >
             Login
           </Typography>
-      <Inputs value={'Email'} sx={{
+          <form onSubmit={onsubmit}>
+      <Inputs label={'Email'} sx={{
               width:430,
               height: 50,
               marginTop:5
-            }} />
-        <Inputs value={'Password'} sx={{
+            }}
+            type={'email'}
+            value={email}
+            onchange={onhandChangeEmail}
+            />
+        <Inputs label={'Password'} sx={{
               width:430,
               height: 50,
                marginTop:30
-            }} />
+               
+            }} 
+             type={'password'}
+            value={password}
+            onchange={handleChangePassword}
+            />
 
       <Buttons value={'Login'}
             sx={{
@@ -72,8 +129,9 @@ export default function Login() {
                 backgroundColor: '#00095E',
               },
             }}/>
-            </Box>
-            </Box>
+            </form>
+          </Box>
+        </Box>
 </>
   )
 }

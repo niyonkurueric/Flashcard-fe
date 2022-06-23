@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box,Typography,Button, Grid, styled  } from '@mui/material';
 import DrawerAppBar from '../component/Navbar';
+import Link from '@material-ui/core/Link';
 const Line = styled('div')(({ theme }) => ({
   position: 'absolute',
   backgroundColor: 'lightblue',
@@ -41,7 +42,7 @@ function Dashboard() {
     </Box>
    <Grid container paddingTop={10} direction="column" alignItems="center">
       <Grid item>
-          <Button variant="contained">GETTING STARTED</Button>
+         <Link href="Cards"> <Button variant="contained">GETTING STARTED</Button></Link> 
       </Grid>
     </Grid>
     </>

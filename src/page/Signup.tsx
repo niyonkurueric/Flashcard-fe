@@ -1,9 +1,63 @@
-import React from 'react'
+import React ,{useState}from 'react'
 import Buttons from '../component/Button'
 import Inputs from '../component/Input'
 import DrawerAppBar from '../component/Navbar';
 import { Box,Typography } from '@mui/material';
+import { useMutation, gql } from '@apollo/client';
+import { Link, useNavigate } from "react-router-dom";
+
+const CREATE_USER_MUTATION = gql`
+  mutation SignupMutation(
+    $names:String!
+    $password:String!
+    $email:String!
+  )
+  {
+  Signup(email:$email,names:$names,password:$password){
+    token
+    user{
+      names
+    }
+  }
+}
+`;
+
+
+
 export default function Signup() {
+const navigate = useNavigate();
+const [email, setEmail] = useState('');
+ const [password, setPassword] = useState('');
+ const [names, setNames] = useState('');
+ const handleChangePassword=(e:any)=>{
+  setPassword(e.target.value)
+ }
+const onhandChangeNames=(e:any)=>{
+setNames(e.target.value)
+ }
+ const onhandChangeEmail=(e:any)=>{
+  setEmail(e.target.value)
+ }
+const [createUser,{error}] = useMutation(CREATE_USER_MUTATION, {
+    onError: (error) => {
+      console.log(error.message);
+    },
+    onCompleted:(createUser)=>{
+      localStorage.setItem("auth", createUser.Signup.token);
+      navigate("/adminpanel");
+    },
+    variables: {
+      names:names,
+      password: password,
+      email:email
+    }
+  });
+const onsubmit=async(e:any)=>{
+   e.preventDefault()
+   const existingToken=await createUser()
+
+ console.log("token",existingToken)
+}
   return (
     <>
     <DrawerAppBar/>
@@ -41,21 +95,33 @@ export default function Signup() {
           >
             SIGNUP
           </Typography>
-      <Inputs value={'Fullname'} sx={{
-              width:430,
+          <form onSubmit={onsubmit}>
+      <Inputs label={'Fullname'} sx={{
+              width:420,
               height: 50,
-              marginTop:5
-            }} />
-        <Inputs value={'Email'} sx={{
-              width:430,
+              margin:"20px 0px 0px 16px"
+            }}
+             type={'text'}
+            value={names}
+            onchange={onhandChangeNames} />
+        <Inputs label={'Email'} sx={{
+              width:420,
               height: 50,
-               marginTop:30
-            }} />
-            <Inputs value={'Password'} sx={{
-              width:430,
+              margin:"20px 0px 0px 16px"
+               
+            }} 
+             type={'email'}
+            value={email}
+            onchange={onhandChangeEmail}/>
+            <Inputs label={'Password'} sx={{
+              width:420,
               height: 50,
-              marginTop:30
-            }} />
+              margin:"20px 0px 0px 16px"
+            }} 
+             type={'password'}
+            value={password}
+            onchange={handleChangePassword}
+            />
       <Buttons value={'Signup'}
             sx={{
               width: {
@@ -64,7 +130,7 @@ export default function Signup() {
               },
               height: 50,
               margin: {
-                xs: '100px 0px',
+                xs: '2px 5px',
                 sm: '20px 0px',
               },
               backgroundColor: '#00095E',
@@ -75,6 +141,7 @@ export default function Signup() {
                 backgroundColor: '#00095E',
               },
             }}/>
+            </form>
           </Box>
         </Box>
 </>

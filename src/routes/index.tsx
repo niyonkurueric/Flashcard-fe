@@ -4,7 +4,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Dashboard from '../page/Dashboard';
 import Login from '../page/Login';
 import Signup from '../page/Signup';
-
+import Cards from '../page/Cards';
+import AdminPanel from '../page/AdminPanel';
 const theme = createTheme({
   palette: {
     primary: {
@@ -29,6 +30,8 @@ const AllRoutes = () => (
        <Route  path="/" element={<Dashboard />} />
         <Route  path="/login" element={<Login />} />
          <Route  path="/signup" element={<Signup/>} />
+        <Route  path="/Cards" element={<Cards/>} />
+        <Route  path="/adminpanel" element={<AdminPanel/>} />
       </Routes>
     </BrowserRouter>
   </ThemeProvider>
