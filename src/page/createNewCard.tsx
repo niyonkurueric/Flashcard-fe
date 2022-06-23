@@ -1,8 +1,9 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import {useNavigate } from "react-router-dom";
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -20,6 +21,9 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import Link from '@material-ui/core/Link'; 
+import Buttons from '../component/Button'
+import Inputs from '../component/Input'
+import DrawerAppBar from '../component/Navbar';
 import Dashboard from './Dashboard';
 
 const drawerWidth = 240;
@@ -93,8 +97,16 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 function AdminPanel() {
+const [email, setEmail] = useState('');
+ const [password, setPassword] = useState('');
 
-    const theme = useTheme();
+ const handleChangePassword=(e:any)=>{
+  setPassword(e.target.value)
+ }
+ const onhandChangeEmail=(e:any)=>{
+  setEmail(e.target.value)
+ }
+  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -110,6 +122,11 @@ const token= localStorage.getItem("auth")
 if(!token)
 {
    navigate("/login");
+}
+
+
+const onsubmit=async(e:any)=>{
+   e.preventDefault()
 }
   return (
     <Box sx={{ display: 'flex' }}>
@@ -159,7 +176,7 @@ if(!token)
                 >
                 <InboxIcon /> 
                 </ListItemIcon>
-                <ListItemText primary={"Dashbord"}sx={{ opacity: open ? 1 : 0 }} />
+                <Link href="adminpanel"><ListItemText primary={"Dashbord"}sx={{ opacity: open ? 1 : 0 }} /></Link>
               </ListItemButton>
             </ListItem>
 
@@ -180,7 +197,7 @@ if(!token)
                 >
                 <InboxIcon /> 
                 </ListItemIcon>
-               <Link href="createNewCard"><ListItemText primary={"Create Card"}sx={{ opacity: open ? 1 : 0 }} /></Link>
+               <ListItemText primary={"Create Card"}sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
 
@@ -210,14 +227,81 @@ if(!token)
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-          enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-          consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-          sapien faucibus et molestie ac.
-        </Typography>
+ <Box>
+        <Box
+          sx={{
+            width: { xs: 300, sm: 460 },
+            minHeight: { xs: 350, sm: 650, md: 650, lg: 350 },
+            backgroundColor: '#EBF2FA',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            borderRadius: 2,
+            padding: '10px 0px',
+            margin: '0px 20px',
+          }}
+        >
+    <Typography
+            variant="h4"
+            sx={{
+              fontSize: '35px',
+              fontWeight: '600',
+              color: '#00095E',
+              fontFamily: 'Robot, sans-serif',
+              paddingTop: '20px',
+              paddingBottom: '10px',
+            }}
+          >
+          Create New card
+          </Typography>
+          <form onSubmit={onsubmit}>
+        <Inputs label={'question'} sx={{
+              width:420,
+              height: 50,
+              margin:"20px 0px 0px 16px"
+               
+            }} 
+             type={'text'}
+            value={email}
+            onchange={onhandChangeEmail}/>
+            <Inputs label={'answer'} sx={{
+              width:420,
+              height: 50,
+              margin:"20px 0px 0px 16px"
+            }} 
+             type={'text'}
+            value={password}
+            onchange={handleChangePassword}
+            />
+      <Buttons value={'Create new card'}
+            sx={{
+              width: {
+                xs: 280,
+                sm: 430,
+              },
+              height: 50,
+              margin: {
+                xs: '0px 5px',
+                sm: '20px 10px',
+              },
+              backgroundColor: '#00095E',
+              fontSize: '18px',
+              color: 'white', 
+              textTransform: 'none',
+              '&:hover': {
+                backgroundColor: '#00095E',
+              },
+            }}/>
+            </form>
+          </Box>
+        </Box>
+
+
+
+
+
+
+
       </Box>
     </Box>
   )

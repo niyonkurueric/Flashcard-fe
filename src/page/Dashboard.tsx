@@ -42,7 +42,7 @@ function Dashboard() {
     </Box>
    <Grid container paddingTop={10} direction="column" alignItems="center">
       <Grid item>
-         <Link href="Cards"> <Button variant="contained">GETTING STARTED</Button></Link> 
+         <Link href="card"> <Button variant="contained">GETTING STARTED</Button></Link> 
       </Grid>
     </Grid>
     </>
