@@ -5,7 +5,7 @@ import DrawerAppBar from '../component/Navbar';
 import { Box, Typography } from '@mui/material';
 import { useMutation, gql } from '@apollo/client';
 import { useNavigate } from "react-router-dom";
-
+import toast, { Toaster } from 'react-hot-toast';
 const CREATE_USER_MUTATION = gql`
   mutation SignupMutation(
     $names:String!
@@ -22,8 +22,6 @@ const CREATE_USER_MUTATION = gql`
 }
 `;
 
-
-
 export default function Signup() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -38,7 +36,10 @@ export default function Signup() {
   const onhandChangeEmail = (e: any) => {
     setEmail(e.target.value)
   }
-  const [createUser] = useMutation(CREATE_USER_MUTATION, {
+  const [createUser, { error }] = useMutation(CREATE_USER_MUTATION, {
+    onError: (error) => {
+      toast.error(error.message)
+    },
     onCompleted: (createUser) => {
       localStorage.setItem("auth", createUser.Signup.token);
       navigate("/adminpanel");
@@ -51,12 +52,11 @@ export default function Signup() {
   });
   const onsubmit = async (e: any) => {
     e.preventDefault()
-    const existingToken = await createUser()
-
-    console.log("token", existingToken)
+    await createUser()
   }
   return (
     <>
+      <Toaster />
       <DrawerAppBar />
       <Box sx={{
         display: 'flex',
