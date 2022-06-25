@@ -14,7 +14,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import img from '../image/Tesla,_Inc.-Logomark-Black-Logo.wine.svg';
-import Link from '@material-ui/core/Link'; 
+import { Link } from 'react-router-dom';
 interface Props {
   window?: () => Window;
 }
@@ -44,8 +44,8 @@ export default function DrawerAppBar(props: Props) {
               <ListItemText>Home</ListItemText>
                <ListItemText>About us</ListItemText>
                 <ListItemText>Contact</ListItemText>
-                <Link href="Cards"><Button  sx={{ color: '#fff' }}>Cards</Button></Link>
-                  <Link href="Login"><Button  sx={{ color: '#fff' }}>Login</Button></Link>
+                <Link to="/cards"><Button  sx={{ color: '#fff' }}>Cards</Button></Link>
+                  <Link to="/login"><Button  sx={{ color: '#fff' }}>Login</Button></Link>
             </ListItemButton>
           </ListItem>
       </List>
@@ -75,12 +75,12 @@ export default function DrawerAppBar(props: Props) {
           <Logimage src={img}/>
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-             <Link href="/">  <Button  sx={{ color: '#fff' }}>Home</Button></Link>
+             <Link to="/">  <Button  sx={{ color: '#fff' }}>Home</Button></Link>
               <Button  sx={{ color: '#fff' }}>About us</Button>
               <Button  sx={{ color: '#fff' }}>Contact</Button>
-              <Link href="Cards"><Button  sx={{ color: '#fff' }}>Cards</Button></Link>
-              <Link href="signup"><Button  sx={{ color: '#fff' }}>Signup</Button></Link>
-              <Link href="Login"><Button  sx={{ color: '#fff' }}>Login</Button></Link>
+              <Link to="/cards"><Button  sx={{ color: '#fff' }}>Cards</Button></Link> 
+              <Link to="/signup"><Button  sx={{ color: '#fff' }}>Signup</Button></Link>
+              <Link to="/login"><Button  sx={{ color: '#fff' }}>Login</Button></Link>
           </Box>
         </Toolbar>
       </AppBar>

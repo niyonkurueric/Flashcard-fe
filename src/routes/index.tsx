@@ -7,6 +7,7 @@ import Signup from '../page/Signup';
 import Cards from '../page/Cards';
 import AdminPanel from '../page/AdminPanel';
 import CreateNewCard from '../page/createNewCard';
+import Update from '../page/Update';
 const theme = createTheme({
   palette: {
     primary: {
@@ -31,9 +32,10 @@ const AllRoutes = () => (
        <Route  path="/" element={<Dashboard />} />
         <Route  path="/login" element={<Login />} />
          <Route  path="/signup" element={<Signup/>} />
-        <Route  path="/Cards" element={<Cards/>} />
+        <Route  path="/cards" element={<Cards/>} />
         <Route  path="/adminpanel" element={<AdminPanel/>} />
         <Route  path="/createNewCard" element={<CreateNewCard/>} />
+        <Route  path="/updateCard" element={<Update/>} />
       </Routes>
     </BrowserRouter>
   </ThemeProvider>
