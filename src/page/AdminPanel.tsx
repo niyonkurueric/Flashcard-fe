@@ -32,9 +32,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 function AdminPanel() {
   const { data } = useQuery(CARDS_QUERY_OUNNER);
-  useEffect(() => {
-    const { data } = useQuery(CARDS_QUERY_OUNNER);
-  }, [data]);
+  // useEffect(() => {
+  //   const { data } = useQuery(CARDS_QUERY_OUNNER);
+  // }, [data]);
   return (
     <Box sx={{ display: 'flex' }}>
       <Sidebar />
