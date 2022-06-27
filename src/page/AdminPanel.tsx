@@ -12,6 +12,7 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CARDS_QUERY_OUNNER = gql`
   query {
@@ -22,12 +23,9 @@ const CARDS_QUERY_OUNNER = gql`
     }
   }
 `;
-
 const DELETE_CARDS_MUTATION = gql`
-  mutation deleteMutation($id: number!) {
-    mutation {
-      deleteCard(id: $id)
-    }
+  mutation ($id: Int!) {
+    deleteCard(id: $id)
   }
 `;
 
@@ -40,19 +38,24 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 function AdminPanel() {
+  const navigate = useNavigate();
   const [id, setId] = useState(0);
   const { data } = useQuery(CARDS_QUERY_OUNNER);
   const [deleteCardMutation] = useMutation(DELETE_CARDS_MUTATION, {
-    onCompleted: (deleteCardMutation) => {
-      toast.success("well created");
+    onCompleted: () => {
+      toast.success("well deleted");
     },
     variables: {
       id: id,
     },
   });
+  const navigationUpdate = (id: number) => {
+    navigate(`/updateCard/${id}`, { state: { id } });
+  };
   const deleteCard = async (e: any, id: number) => {
     e.preventDefault();
     setId(id);
+    console.log(id);
     await deleteCardMutation();
   };
   // useEffect(() => {
@@ -71,7 +74,7 @@ function AdminPanel() {
                 <CardActionArea>
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                      Lizard
+                      Question
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
                       {card.question}
@@ -88,15 +91,13 @@ function AdminPanel() {
                     </Button>
                     <CardActions>
                       {" "}
-                      <Link
-                        to="/updateCard"
-                        style={{ color: "black", textDecoration: "none" }}
+                      <Button
+                        size="small"
+                        variant="contained"
+                        onClick={() => navigationUpdate(card.id)}
                       >
-                        {" "}
-                        <Button size="small" variant="contained">
-                          Update
-                        </Button>
-                      </Link>
+                        Update
+                      </Button>
                     </CardActions>
                   </CardActions>
                 </CardActionArea>
