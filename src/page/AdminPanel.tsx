@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
@@ -49,7 +49,8 @@ function AdminPanel() {
   const [flippedCard, setFlippedCard] = useState(0);
   const navigate = useNavigate();
   const [id, setId] = useState(0);
-  const { data } = useQuery(CARDS_QUERY_OUNNER);
+  const { refetch, loading, data } = useQuery(CARDS_QUERY_OUNNER);
+
   const [deleteCardMutation] = useMutation(DELETE_CARDS_MUTATION, {
     onCompleted: () => {
       toast.success("well deleted");
@@ -72,10 +73,11 @@ function AdminPanel() {
     setId(id);
     console.log(id);
     await deleteCardMutation();
+    refetch();
   };
-  // useEffect(() => {
-  //   const { data } = useQuery(CARDS_QUERY_OUNNER);
-  // }, [data]);
+  useEffect(() => {
+    refetch();
+  }, []);
   return (
     <Box sx={{ display: "flex" }}>
       <Sidebar />
@@ -98,7 +100,7 @@ function AdminPanel() {
           </Typography>
           <Line />
         </Grid>
-        {!data ? (
+        {loading ? (
           <CircularProgress sx={{ margin: 30 }} />
         ) : (
           <>
