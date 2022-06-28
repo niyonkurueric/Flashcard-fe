@@ -7,7 +7,7 @@ import { styled } from "@mui/material/styles";
 import Buttons from "../component/Button";
 import Inputs from "../component/Input";
 import { useMutation, gql } from "@apollo/client";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const UPDATE_CARDS_MUTATION = gql`
   mutation updateMutation($question: String!, $answer: String!, $id: Int!) {
