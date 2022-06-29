@@ -49,9 +49,9 @@ function Dashboard() {
       </Box>
       <Grid container paddingTop={10} direction="column" alignItems="center">
         <Grid item>
-          <Link to="/cards">
+          <Link style={{ textDecoration: "none" }} to="/cards">
             {" "}
-            <Button variant="contained">GETTING STARTED</Button>
+            <Button variant="contained">START STUDYING</Button>
           </Link>
         </Grid>
       </Grid>

@@ -45,7 +45,7 @@ function Cards() {
   };
   useEffect(() => {
     refetch();
-  }, []);
+  });
   return (
     <>
       <DrawerAppBar />

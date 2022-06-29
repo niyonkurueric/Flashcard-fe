@@ -76,7 +76,7 @@ function AdminPanel() {
   };
   useEffect(() => {
     refetch();
-  }, []);
+  });
   return (
     <Box sx={{ display: "flex" }}>
       <Sidebar />

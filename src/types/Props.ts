@@ -7,7 +7,10 @@ export interface Inputprops {
   label: string
   onchange: any
   value: any
-  type: string
+  type: string,
+  default?: any,
+  name?: string,
+  defaultValue?: string
 }
 export interface contentSiber {
   value: any
