@@ -40,9 +40,9 @@ export default function Login() {
   });
   const onsubmit = async (e: any) => {
     e.preventDefault();
-    if (email == "") {
+    if (email === "") {
       toast.error("email is required");
-    } else if (password == "") {
+    } else if (password === "") {
       toast.error("password is required");
     } else {
       await loginUser();

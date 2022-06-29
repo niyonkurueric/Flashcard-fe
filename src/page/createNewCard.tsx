@@ -46,9 +46,9 @@ function CreateNewCard() {
   const onsubmit = async (e: any) => {
     e.preventDefault();
     const formName: any = document.getElementById("formname");
-    if (question == "") {
+    if (question === "") {
       toast.error("Question is required");
-    } else if (answer == "") {
+    } else if (answer === "") {
       toast.error("Answer is required");
     } else {
       await createCard();
