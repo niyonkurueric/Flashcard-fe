@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
@@ -38,14 +38,14 @@ const CARDS_QUERY = gql`
 function Cards() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [flippedCard, setFlippedCard] = useState(0);
-  const { data } = useQuery(CARDS_QUERY);
+  const { refetch, data } = useQuery(CARDS_QUERY);
   const flipCard = (id: number, e: any) => {
     setIsFlipped(!isFlipped);
     setFlippedCard(id);
   };
-  // useEffect(() => {
-  //   const { data } = useQuery(CARDS_QUERY_OUNNER);
-  // }, [data]);
+  useEffect(() => {
+    refetch();
+  }, []);
   return (
     <>
       <DrawerAppBar />

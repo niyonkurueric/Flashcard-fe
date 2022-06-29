@@ -46,9 +46,15 @@ function CreateNewCard() {
   const onsubmit = async (e: any) => {
     e.preventDefault();
     const formName: any = document.getElementById("formname");
-    await createCard();
+    if (question == "") {
+      toast.error("Question is required");
+    } else if (answer == "") {
+      toast.error("Answer is required");
+    } else {
+      await createCard();
+    }
+
     formName.reset();
-    console.log(formName);
   };
   return (
     <Box sx={{ display: "flex" }}>

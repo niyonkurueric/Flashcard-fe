@@ -51,7 +51,15 @@ export default function Signup() {
   });
   const onsubmit = async (e: any) => {
     e.preventDefault();
-    await createUser();
+    if (names == "") {
+      toast.error("full name is required");
+    } else if (password == "") {
+      toast.error("password is required");
+    } else if (email === "") {
+      toast.error("password is required");
+    } else {
+      await createUser();
+    }
   };
   return (
     <>

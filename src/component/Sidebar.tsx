@@ -19,6 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import { Button } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -108,6 +109,10 @@ function Sidebar() {
   if (!token) {
     navigate("/login");
   }
+  const logout = () => {
+    window.localStorage.removeItem("auth");
+    navigate("/login");
+  };
 
   return (
     <>
@@ -129,6 +134,12 @@ function Sidebar() {
           <Typography variant="h6" noWrap component="div">
             knowledge Rehab Flash card
           </Typography>
+          <Button
+            onClick={logout}
+            sx={{ color: "white", margin: "0px 10px 1px 1000px" }}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

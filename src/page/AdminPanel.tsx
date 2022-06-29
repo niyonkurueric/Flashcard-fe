@@ -71,7 +71,6 @@ function AdminPanel() {
   const deleteCard = async (e: any, id: number) => {
     e.preventDefault();
     setId(id);
-    console.log(id);
     await deleteCardMutation();
     refetch();
   };
