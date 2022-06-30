@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Sidebar from "../component/Sidebar";
 
@@ -6,14 +6,27 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import Buttons from "../component/Button";
 import Inputs from "../component/Input";
-import { useMutation, gql } from "@apollo/client";
+import { useQuery, useMutation, gql } from "@apollo/client";
 import toast from "react-hot-toast";
+import { Routes, Route, useParams } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from "react-router-dom";
+
+const GET_ONE_CARD = gql`
+  query ($id: Int!) {
+    getOneCard(id: $id) {
+      question
+      answer
+    }
+  }
+`;
 
 const UPDATE_CARDS_MUTATION = gql`
   mutation updateMutation($question: String!, $answer: String!, $id: Int!) {
     UpdateCard(question: $question, answer: $answer, id: $id) {
       question
       answer
+      id
     }
   }
 `;
@@ -26,9 +39,19 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 function Update() {
-  const queryParams = new URLSearchParams(window.location.search);
+  const navigate = useNavigate();
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
+  const { id } = useParams();
+  const paramsId: any = id;
+  const Id = parseInt(paramsId);
+  const { refetch, loading, data } = useQuery(GET_ONE_CARD, {
+    variables: { id: Id },
+    onCompleted: (data) => {
+      setQuestion(data.getOneCard.question);
+      setAnswer(data.getOneCard.answer);
+    },
+  });
 
   const handleChangeAnswer = (e: any) => {
     setAnswer(e.target.value);
@@ -39,17 +62,20 @@ function Update() {
 
   const [UpdateCard] = useMutation(UPDATE_CARDS_MUTATION, {
     onCompleted: (UpdateCard) => {
-      toast.success("well updated");
+      toast.success("Registration Successful");
+      navigate("/adminpanel");
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
     variables: {
       question: question,
       answer: answer,
+      id: Id,
     },
   });
-
   const onsubmit = async (e: any) => {
     e.preventDefault();
-    console.log(queryParams);
     await UpdateCard();
   };
   return (
@@ -84,51 +110,57 @@ function Update() {
             >
               Update Card
             </Typography>
-            <form onSubmit={onsubmit}>
-              <Inputs
-                label={"question"}
-                sx={{
-                  width: 420,
-                  height: 50,
-                  margin: "20px 0px 0px 16px",
-                }}
-                type={"text"}
-                value={question}
-                onchange={onhandChangeQuestion}
-              />
-              <Inputs
-                label={"answer"}
-                sx={{
-                  width: 420,
-                  height: 50,
-                  margin: "20px 0px 0px 16px",
-                }}
-                type={"text"}
-                value={answer}
-                onchange={handleChangeAnswer}
-              />
-              <Buttons
-                value={"Update"}
-                sx={{
-                  width: {
-                    xs: 280,
-                    sm: 430,
-                  },
-                  height: 50,
-                  margin: {
-                    xs: "0px 5px",
-                    sm: "20px 10px",
-                  },
-                  backgroundColor: "#00095E",
-                  fontSize: "18px",
-                  color: "white",
-                  textTransform: "none",
-                  "&:hover": {
-                    backgroundColor: "#00095E",
-                  },
-                }}
-              />
-            </form>
+            {!data ? (
+              <CircularProgress sx={{ margin: 30 }} />
+            ) : (
+              <form onSubmit={onsubmit}>
+                <>
+                  <Inputs
+                    label={"card.question"}
+                    sx={{
+                      width: 420,
+                      height: 50,
+                      margin: "20px 0px 0px 16px",
+                    }}
+                    type={"text"}
+                    value={question}
+                    onchange={onhandChangeQuestion}
+                  />
+                  <Inputs
+                    label={"card.question"}
+                    sx={{
+                      width: 420,
+                      height: 50,
+                      margin: "20px 0px 0px 16px",
+                    }}
+                    type={"text"}
+                    value={answer}
+                    onchange={handleChangeAnswer}
+                  />
+                  <Buttons
+                    value={"Update"}
+                    sx={{
+                      width: {
+                        xs: 280,
+                        sm: 430,
+                      },
+                      height: 50,
+                      margin: {
+                        xs: "0px 5px",
+                        sm: "20px 10px",
+                      },
+                      backgroundColor: "#00095E",
+                      fontSize: "18px",
+                      color: "white",
+                      textTransform: "none",
+                      "&:hover": {
+                        backgroundColor: "#00095E",
+                      },
+                    }}
+                  />
+                </>
+              </form>
+            )}
           </Box>
         </Box>
       </Box>

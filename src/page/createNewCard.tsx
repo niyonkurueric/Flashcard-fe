@@ -7,6 +7,8 @@ import Inputs from "../component/Input";
 import Sidebar from "../component/Sidebar";
 import { useMutation, gql } from "@apollo/client";
 import toast, { Toaster } from "react-hot-toast";
+import Card from "@mui/material/Card";
+import { useNavigate } from "react-router-dom";
 const CREATE_CARDS_MUTATION = gql`
   mutation SignupMutation($question: String!, $answer: String!) {
     creatNewCard(question: $question, answer: $answer) {
@@ -24,6 +26,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   ...theme.mixins.toolbar,
 }));
 function CreateNewCard() {
+  const navigate = useNavigate();
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
 
@@ -51,7 +54,11 @@ function CreateNewCard() {
     } else if (answer === "") {
       toast.error("Answer is required");
     } else {
-      await createCard();
+      if (await createCard()) {
+        setInterval(function () {
+          navigate("/adminpanel");
+        }, 2000);
+      }
     }
 
     formName.reset();
@@ -63,7 +70,7 @@ function CreateNewCard() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Box>
-          <Box
+          <Card
             sx={{
               width: { xs: 300, sm: 460 },
               minHeight: { xs: 350, sm: 650, md: 650, lg: 350 },
@@ -73,13 +80,13 @@ function CreateNewCard() {
               alignItems: "center",
               borderRadius: 2,
               padding: "10px 0px",
-              margin: "0px 20px",
+              margin: "0px 400px",
             }}
           >
             <Typography
               variant="h4"
               sx={{
-                fontSize: "35px",
+                fontSize: "20px",
                 fontWeight: "600",
                 color: "#00095E",
                 fontFamily: "Robot, sans-serif",
@@ -87,7 +94,7 @@ function CreateNewCard() {
                 paddingBottom: "10px",
               }}
             >
-              Create New card
+              CREATE FLASHCARD
             </Typography>
             <form onSubmit={onsubmit} id="formname">
               <Inputs
@@ -112,8 +119,9 @@ function CreateNewCard() {
                 value={answer}
                 onchange={handleChangeAnswer}
               />
+
               <Buttons
-                value={"Create new card"}
+                value={"CREATE"}
                 sx={{
                   width: {
                     xs: 280,
@@ -134,7 +142,7 @@ function CreateNewCard() {
                 }}
               />
             </form>
-          </Box>
+          </Card>
         </Box>
       </Box>
     </Box>

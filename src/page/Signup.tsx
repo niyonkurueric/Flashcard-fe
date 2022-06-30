@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 import { useMutation, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import Card from "@mui/material/Card";
 const CREATE_USER_MUTATION = gql`
   mutation SignupMutation(
     $names: String!
@@ -40,6 +41,7 @@ export default function Signup() {
       toast.error(error.message);
     },
     onCompleted: (createUser) => {
+      toast.success("Registration Successful");
       localStorage.setItem("auth", createUser.Signup.token);
       navigate("/adminpanel");
     },
@@ -75,7 +77,7 @@ export default function Signup() {
           justifyContent: "space-evenly",
         }}
       >
-        <Box
+        <Card
           sx={{
             width: { xs: 300, sm: 460 },
             minHeight: { xs: 350, sm: 650, md: 650, lg: 350 },
@@ -145,7 +147,7 @@ export default function Signup() {
                 height: 50,
                 margin: {
                   xs: "2px 5px",
-                  sm: "20px 0px",
+                  sm: "20px 10px",
                 },
                 backgroundColor: "#00095E",
                 fontSize: "18px",
@@ -157,7 +159,7 @@ export default function Signup() {
               }}
             />
           </form>
-        </Box>
+        </Card>
       </Box>
     </>
   );

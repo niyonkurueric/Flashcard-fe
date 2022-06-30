@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 import { useMutation, gql } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import Card from "@mui/material/Card";
 const CREATE_LOGIN_MUTATION = gql`
   mutation loginMutation($password: String!, $email: String!) {
     login(email: $email, password: $password) {
@@ -29,6 +30,9 @@ export default function Login() {
   };
 
   const [loginUser] = useMutation(CREATE_LOGIN_MUTATION, {
+    onError: (error) => {
+      toast.error(error.message);
+    },
     onCompleted: (loginUser) => {
       localStorage.setItem("auth", loginUser.login.token);
       navigate("/adminpanel");
@@ -57,12 +61,12 @@ export default function Login() {
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
-          margin: "100px 20px",
+          margin: "150px 20px",
           background: "F8F9FA",
           justifyContent: "space-evenly",
         }}
       >
-        <Box
+        <Card
           sx={{
             width: { xs: 300, sm: 460 },
             minHeight: { xs: 350, sm: 650, md: 650, lg: 350 },
@@ -92,9 +96,9 @@ export default function Login() {
             <Inputs
               label={"Email"}
               sx={{
-                width: 430,
+                width: 420,
                 height: 50,
-                marginTop: 5,
+                margin: "20px 0px 0px 16px",
               }}
               type={"email"}
               value={email}
@@ -103,9 +107,9 @@ export default function Login() {
             <Inputs
               label={"Password"}
               sx={{
-                width: 430,
+                width: 420,
                 height: 50,
-                marginTop: 30,
+                margin: "20px 0px 0px 16px",
               }}
               type={"password"}
               value={password}
@@ -121,8 +125,8 @@ export default function Login() {
                 },
                 height: 50,
                 margin: {
-                  xs: "50px 0px",
-                  sm: "20px 0px",
+                  xs: "2px 5px",
+                  sm: "30px 10px",
                 },
                 backgroundColor: "#00095E",
                 fontSize: "18px",
@@ -134,7 +138,7 @@ export default function Login() {
               }}
             />
           </form>
-        </Box>
+        </Card>
       </Box>
     </>
   );
