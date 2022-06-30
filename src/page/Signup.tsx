@@ -24,6 +24,7 @@ const CREATE_USER_MUTATION = gql`
 
 export default function Signup() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [names, setNames] = useState("");
@@ -60,7 +61,12 @@ export default function Signup() {
     } else if (email === "") {
       toast.error("password is required");
     } else {
-      await createUser();
+      if (!loading) {
+        setLoading(true);
+        if (await createUser()) {
+          setLoading(false);
+        }
+      }
     }
   };
   return (
@@ -139,6 +145,7 @@ export default function Signup() {
             />
             <Buttons
               value={"Signup"}
+              loading={loading}
               sx={{
                 width: {
                   xs: 280,

@@ -27,6 +27,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 function CreateNewCard() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
 
@@ -54,13 +55,14 @@ function CreateNewCard() {
     } else if (answer === "") {
       toast.error("Answer is required");
     } else {
-      if (await createCard()) {
-        setInterval(function () {
-          navigate("/adminpanel");
-        }, 2000);
+      if (!loading) {
+        setLoading(true);
+        if (await createCard()) {
+          setLoading(false);
+          await navigate("/adminpanel");
+        }
       }
     }
-
     formName.reset();
   };
   return (
@@ -122,6 +124,7 @@ function CreateNewCard() {
 
               <Buttons
                 value={"CREATE"}
+                loading={loading}
                 sx={{
                   width: {
                     xs: 280,

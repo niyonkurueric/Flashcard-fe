@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import ReactCardFlip from "react-card-flip";
 import CircularProgress from "@mui/material/CircularProgress";
+import { MenuItem, TextField } from "@mui/material";
 
 const Line = styled("div")(({ theme }) => ({
   position: "absolute",
@@ -30,14 +31,15 @@ const Line = styled("div")(({ theme }) => ({
   },
 }));
 const CARDS_QUERY_OUNNER = gql`
-  query {
-    getOwnCards {
+  query ($orderBy: Sort) {
+    getOwnCards(orderBy: $orderBy) {
       question
       answer
       id
     }
   }
 `;
+
 const DELETE_CARDS_MUTATION = gql`
   mutation ($id: Int!) {
     deleteCard(id: $id)
@@ -45,11 +47,16 @@ const DELETE_CARDS_MUTATION = gql`
 `;
 
 function AdminPanel() {
+  const [orderBy, setOrderBy] = useState();
   const [isFlipped, setIsFlipped] = useState(false);
   const [flippedCard, setFlippedCard] = useState(0);
   const navigate = useNavigate();
   const [id, setId] = useState(0);
-  const { refetch, loading, data } = useQuery(CARDS_QUERY_OUNNER);
+  const { refetch, loading, data } = useQuery(CARDS_QUERY_OUNNER, {
+    variables: {
+      orderBy: orderBy,
+    },
+  });
 
   const [deleteCardMutation] = useMutation(DELETE_CARDS_MUTATION, {
     onCompleted: () => {
@@ -98,6 +105,30 @@ function AdminPanel() {
             Owner Flash Cards
           </Typography>
           <Line />
+        </Grid>
+        <Grid
+          container
+          spacing={5}
+          sx={{ margin: "10px 0 0 0" }}
+          textAlign="center"
+        >
+          <TextField
+            onChange={(e: any) => setOrderBy(e.target.value)}
+            value={orderBy}
+            label="sort"
+            select
+            variant="outlined"
+            sx={{ width: "200px" }}
+          >
+            {[
+              { value: "asc", label: "asc" },
+              { value: "desc", label: "desc" },
+            ].map((option) => (
+              <MenuItem key={option.label} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
         </Grid>
         {loading ? (
           <CircularProgress sx={{ margin: 30 }} />

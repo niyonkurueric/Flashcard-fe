@@ -9,6 +9,7 @@ import CardContent from "@mui/material/CardContent";
 import DrawerAppBar from "../component/Navbar";
 import ReactCardFlip from "react-card-flip";
 import CircularProgress from "@mui/material/CircularProgress";
+import { MenuItem, TextField } from "@mui/material";
 
 const Line = styled("div")(({ theme }) => ({
   position: "absolute",
@@ -25,9 +26,10 @@ const Line = styled("div")(({ theme }) => ({
     left: "13%",
   },
 }));
+
 const CARDS_QUERY = gql`
-  query {
-    getAllCard {
+  query ($orderBy: Sort) {
+    getAllCard(orderBy: $orderBy) {
       question
       answer
       id
@@ -37,8 +39,13 @@ const CARDS_QUERY = gql`
 
 function Cards() {
   const [isFlipped, setIsFlipped] = useState(false);
+  const [orderBy, setOrderBy] = useState();
   const [flippedCard, setFlippedCard] = useState(0);
-  const { refetch, data } = useQuery(CARDS_QUERY);
+  const { refetch, data } = useQuery(CARDS_QUERY, {
+    variables: {
+      orderBy: orderBy,
+    },
+  });
   const flipCard = (id: number, e: any) => {
     setIsFlipped(!isFlipped);
     setFlippedCard(id);
@@ -62,8 +69,29 @@ function Cards() {
             >
               Public FlashCards
             </Typography>
+
             <Line />
           </Grid>
+          <Grid container spacing={5} sx={{ margin: "50px 0 0 10px" }}>
+            <TextField
+              onChange={(e: any) => setOrderBy(e.target.value)}
+              value={orderBy}
+              label="sort"
+              select
+              variant="outlined"
+              sx={{ width: "200px" }}
+            >
+              {[
+                { value: "asc", label: "asc" },
+                { value: "desc", label: "desc" },
+              ].map((option) => (
+                <MenuItem key={option.label} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+
           {!data ? (
             <CircularProgress sx={{ margin: 30 }} />
           ) : (

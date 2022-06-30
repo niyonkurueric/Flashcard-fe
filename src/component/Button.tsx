@@ -1,7 +1,15 @@
-import React, { FC } from 'react';
-import { Button } from '@mui/material';
-import {Buttonprops} from'../types/Props'
+import React, { FC } from "react";
+import { Button } from "@mui/material";
+import { Buttonprops } from "../types/Props";
+import CircularProgress from "@mui/material/CircularProgress";
 
-const Buttons:FC<Buttonprops>= ({value, ...props} ) => <Button type='submit' variant="contained" {...props}>{value}</Button>;
+const Buttons: FC<Buttonprops> = ({ value, loading, ...props }) => {
+  console.log(loading);
+  return (
+    <Button type="submit" variant="contained" {...props}>
+      {loading ? <CircularProgress color="success" /> : value}
+    </Button>
+  );
+};
 
 export default Buttons;

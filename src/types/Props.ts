@@ -1,6 +1,7 @@
 export interface Buttonprops {
-  sx: any,
-  value: string
+  sx?: any,
+  value: string,
+  loading?: boolean
 }
 export interface Inputprops {
   sx: any,

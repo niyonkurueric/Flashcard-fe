@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Sidebar from "../component/Sidebar";
 
@@ -8,7 +8,7 @@ import Buttons from "../component/Button";
 import Inputs from "../component/Input";
 import { useQuery, useMutation, gql } from "@apollo/client";
 import toast from "react-hot-toast";
-import { Routes, Route, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
 
@@ -45,7 +45,7 @@ function Update() {
   const { id } = useParams();
   const paramsId: any = id;
   const Id = parseInt(paramsId);
-  const { refetch, loading, data } = useQuery(GET_ONE_CARD, {
+  const { data } = useQuery(GET_ONE_CARD, {
     variables: { id: Id },
     onCompleted: (data) => {
       setQuestion(data.getOneCard.question);
@@ -63,7 +63,6 @@ function Update() {
   const [UpdateCard] = useMutation(UPDATE_CARDS_MUTATION, {
     onCompleted: (UpdateCard) => {
       toast.success("Registration Successful");
-      navigate("/adminpanel");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -77,6 +76,7 @@ function Update() {
   const onsubmit = async (e: any) => {
     e.preventDefault();
     await UpdateCard();
+    await navigate("/adminpanel");
   };
   return (
     <Box sx={{ display: "flex" }}>
